@@ -60,7 +60,11 @@ const AccountButton: React.FunctionComponent = () => {
       <MetaMaskButton handleClick={requestConnect} text="Connect MetaMask" />
     );
 
-  if (chainId !== parseInt(process.env.NEXT_PUBLIC_NETWORK_CHAIN_ID || "5"))
+  if (
+    !!chainId &&
+    parseInt(chainId) !==
+      parseInt(process.env.NEXT_PUBLIC_NETWORK_CHAIN_ID || "80001")
+  )
     return (
       <MetaMaskButton
         handleClick={requestChangeChainId}
@@ -75,7 +79,6 @@ const AccountButton: React.FunctionComponent = () => {
         variant="contained"
         onClick={handleClick}
       >
-        <Image src="/pokeball.png" alt="me" width="24" height="24" />
         <Typography variant="h6" sx={{ marginLeft: 1 }}>
           {truncateString(account)}
         </Typography>
@@ -123,30 +126,10 @@ const AccountButton: React.FunctionComponent = () => {
             >
               <OilBarrelIcon />
               <Typography variant="h6" sx={{ marginLeft: 1 }}>
-                Free ETH Faucet
+                Mumbai Faucet
               </Typography>
             </MenuStyledButton>
           </StyledBox>
-
-          <AccountLink
-            href="/pokemon-center"
-            text="Pokemon Center"
-            icon={<HouseIcon />}
-          />
-
-          <AccountLink
-            href="/lucky-draw"
-            text="Lucky Draw"
-            icon={<CelebrationIcon />}
-          />
-
-          <AccountLink
-            href="/market-place"
-            text="Market Place"
-            icon={<ShoppingBasketIcon />}
-          />
-
-          <AccountLink href="/arena" text="Arena" icon={<StadiumIcon />} />
         </PopoverBox>
       </Popover>
     </>

@@ -11,7 +11,7 @@ const MetaMaskButton: React.FunctionComponent<IMetaMaskButton> = (props) => {
   const { handleClick, text } = props;
 
   return (
-    <Button variant="contained" onClick={handleClick}>
+    <Button variant="contained" onClick={handleClick} size="small">
       <Image
         src="/metamask-logo-black-and-white.png"
         alt="me"

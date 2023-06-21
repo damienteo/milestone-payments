@@ -44,7 +44,7 @@ const useConnectWallet = () => {
     const accounts = await provider.listAccounts();
 
     if (accounts?.[0]) {
-      setAccount(accounts[0]);
+      setAccount(accounts[0].address);
     }
   };
 
