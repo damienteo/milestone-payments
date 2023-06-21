@@ -70,6 +70,9 @@ export const TransactionsSlice = createSlice({
   name: "Transactions",
   initialState,
   reducers: {
+    setLoading: (state, action) => {
+      state.loading = action.payload;
+    },
     clearTransactions: (state) => {
       state.data = null;
       state.error = null;
@@ -130,6 +133,7 @@ export const TransactionsSlice = createSlice({
 });
 
 export const {
+  setLoading,
   clearTransactions,
   addPendingTransaction,
   removePendingTransaction,
