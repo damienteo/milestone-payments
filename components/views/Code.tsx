@@ -1,9 +1,15 @@
 import React from "react";
-import { Box, BoxProps, Typography } from "@mui/material";
+import { Box, BoxProps, Link, Typography } from "@mui/material";
 import Image from "next/image";
 import { styled } from "@mui/material/styles";
 
 import Layout from "../layout/Layout";
+
+const {
+  NEXT_PUBLIC_INITIALIZER_ADDRESS = "0x9536fd0322Ab322110C4D0621b46dC936Ee9fCaa",
+  NEXT_PUBLIC_FACTORY_ADDRESS = "0xd7906deE9239509EF4564839a25460Bb8F97D2e6",
+  NEXT_PUBLIC_CLONE_ADDRESS = "0x60BF7eba37b2A914EcEB8f228c302a1D02aDf6e2",
+} = process.env;
 
 const CodeBox = styled(Box)<BoxProps>(({ theme }) => ({
   backgroundColor: "#f6f8fa",
@@ -56,6 +62,12 @@ const MainPage: React.FunctionComponent = () => {
       </Box>
 
       <Typography variant="h2">Factory Contract</Typography>
+      <Link
+        href={`https://mumbai.polygonscan.com/address/${NEXT_PUBLIC_FACTORY_ADDRESS}#code`}
+        target="_blank"
+      >
+        Contract on PolygonScan ({NEXT_PUBLIC_FACTORY_ADDRESS})
+      </Link>
       <CodeBox component="pre">
         <code style={{ display: "block", whiteSpace: "pre", tabSize: 2 }}>
           {`contract MilestonePaymentsProxyFactory is Ownable {
@@ -95,6 +107,20 @@ const MainPage: React.FunctionComponent = () => {
       </CodeBox>
 
       <Typography variant="h2">Logic Contract</Typography>
+      <Link
+        href={`https://mumbai.polygonscan.com/address/${NEXT_PUBLIC_INITIALIZER_ADDRESS}#code`}
+        target="_blank"
+        sx={{ display: "block" }}
+      >
+        Contract on PolygonScan ({NEXT_PUBLIC_INITIALIZER_ADDRESS})
+      </Link>
+      <Link
+        href={`https://mumbai.polygonscan.com/address/${NEXT_PUBLIC_CLONE_ADDRESS}#code`}
+        target="_blank"
+        sx={{ display: "block" }}
+      >
+        Cloned Contract on PolygonScan ({NEXT_PUBLIC_CLONE_ADDRESS})
+      </Link>
       <CodeBox component="pre">
         <code style={{ display: "block", whiteSpace: "pre", tabSize: 2 }}>
           {`contract MilestonePaymentsInitializable is Initializable {
