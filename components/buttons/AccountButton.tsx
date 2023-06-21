@@ -45,31 +45,6 @@ const AccountButton: React.FunctionComponent = () => {
     handleOpenWindow("https://mumbaifaucet.com/");
   };
 
-  if (!provider)
-    return (
-      <MetaMaskButton
-        handleClick={handleInstallMetamask}
-        text="Install MetaMask"
-      />
-    );
-
-  if (!account)
-    return (
-      <MetaMaskButton handleClick={requestConnect} text="Connect MetaMask" />
-    );
-
-  if (
-    !!chainId &&
-    parseInt(chainId) !==
-      parseInt(process.env.NEXT_PUBLIC_NETWORK_CHAIN_ID || "80001")
-  )
-    return (
-      <MetaMaskButton
-        handleClick={requestChangeChainId}
-        text="Change to Mumbai"
-      />
-    );
-
   return (
     <>
       <MenuStyledButton
@@ -78,7 +53,7 @@ const AccountButton: React.FunctionComponent = () => {
         onClick={handleClick}
       >
         <Typography variant="h6" sx={{ marginLeft: 1 }}>
-          {truncateString(account)}
+          Links
         </Typography>
       </MenuStyledButton>
       <Popover
@@ -104,18 +79,20 @@ const AccountButton: React.FunctionComponent = () => {
         }}
       >
         <PopoverBox sx={{ textAlign: "center" }}>
-          <StyledBox>
-            <Typography variant="h5">
-              Account:{" "}
-              <Link
-                href={`https://mumbai.polygonscan.com/address/${account}`}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                {truncateString(account, 8)}
-              </Link>
-            </Typography>
-          </StyledBox>
+          {!!account && (
+            <StyledBox>
+              <Typography variant="h5">
+                Account:{" "}
+                <Link
+                  href={`https://mumbai.polygonscan.com/address/${account}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {truncateString(account, 8)}
+                </Link>
+              </Typography>
+            </StyledBox>
+          )}
 
           <AccountLink href="/" text="Intro" icon={<HouseIcon />} />
 
@@ -126,6 +103,29 @@ const AccountButton: React.FunctionComponent = () => {
             text="Payments"
             icon={<PaymentsIcon />}
           />
+
+          {!provider && (
+            <MetaMaskButton
+              handleClick={handleInstallMetamask}
+              text="Install MetaMask"
+            />
+          )}
+
+          {!account && (
+            <MetaMaskButton
+              handleClick={requestConnect}
+              text="Connect MetaMask"
+            />
+          )}
+
+          {!!chainId &&
+            parseInt(chainId) !==
+              parseInt(process.env.NEXT_PUBLIC_NETWORK_CHAIN_ID || "80001") && (
+              <MetaMaskButton
+                handleClick={requestChangeChainId}
+                text="Change to Mumbai"
+              />
+            )}
         </PopoverBox>
       </Popover>
     </>
