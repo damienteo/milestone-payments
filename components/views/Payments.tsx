@@ -153,64 +153,44 @@ const Payments: React.FunctionComponent = () => {
   return (
     <Layout>
       <Container maxWidth="md" sx={{ marginTop: 8 }}>
-        {/* Show button to connect if not connected */}
-        {!account && (
-          <StyledBox>
+        {/* Show JSON file for the Payment details */}
+        <Box
+          sx={{
+            display: "inline-block",
+            paddingX: 3,
+            border: "1px solid #D3D3D3",
+            borderRadius: 5,
+            marginBottom: 3,
+          }}
+        >
+          <Typography
+            variant="h6"
+            sx={{ display: "inline-block", textAlign: "left" }}
+          >
+            {" "}
+            <pre>{JSON.stringify(paymentDetails, null, 4)}</pre>
+          </Typography>
+          <Box sx={{ marginBottom: 2 }}>
             <InteractButton
-              text="Connect"
-              method={requestConnect}
+              text="Set New Merkle Root"
+              method={handleSetMerkleRoot}
               loading={loading}
             />
-          </StyledBox>
-        )}
-
-        {account && (
-          <>
-            {/* Show JSON file for the Payment details */}
-            <Box
-              sx={{
-                display: "inline-block",
-                paddingX: 3,
-                border: "1px solid #D3D3D3",
-                borderRadius: 5,
-                marginBottom: 3,
-              }}
-            >
-              <Typography
-                variant="h6"
-                sx={{ display: "inline-block", textAlign: "left" }}
-              >
-                {" "}
-                <pre>{JSON.stringify(paymentDetails, null, 4)}</pre>
-              </Typography>
-              <Box sx={{ marginBottom: 2 }}>
-                <InteractButton
-                  text="Set New Merkle Root"
-                  method={handleSetMerkleRoot}
-                  loading={loading}
-                />
-                <InteractButton
-                  text="Reset Merkle Root"
-                  method={resetMerkleRoot}
-                  loading={loading}
-                />
-              </Box>
-            </Box>
-
-            <Typography variant="h3">Claimed: {pastClaimed}</Typography>
-            {/* Show the merkle root */}
-            <Typography variant="h5">Merkle Root: {merkleRoot}</Typography>
-            {/* Show current balance */}
-            <Typography variant="h5">
-              Test USD Balance: {walletBalance}
-            </Typography>
             <InteractButton
-              text="Claim"
-              method={handleClaim}
+              text="Reset Merkle Root"
+              method={resetMerkleRoot}
               loading={loading}
             />
-          </>
-        )}
+          </Box>
+        </Box>
+
+        {/* Show the merkle root */}
+        <Typography variant="h5">Merkle Root: {merkleRoot}</Typography>
+        <Typography variant="h5">Cumulative Claimed: ${pastClaimed}</Typography>
+        {/* Show current balance */}
+        <Typography variant="h5">Test USD Balance: ${walletBalance}</Typography>
+        <InteractButton text="Claim" method={handleClaim} loading={loading} />
+
         <AlertBar
           severity="warning"
           text={error || paymentsError}
