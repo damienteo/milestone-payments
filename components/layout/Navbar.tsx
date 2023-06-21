@@ -22,16 +22,6 @@ const NavBar: React.FunctionComponent = () => {
           <StyledBox>
             <Typography>Payments Agreement</Typography>
           </StyledBox>
-          {router.pathname !== "/" && (
-            <NextLink href="/" passHref>
-              <MenuStyledButton
-                variant="outlined"
-                sx={{ marginX: theme.spacing(1) }}
-              >
-                <Typography variant="h6">Back to Main</Typography>
-              </MenuStyledButton>
-            </NextLink>
-          )}
           <AccountButton />
         </Toolbar>
       </AppBar>
