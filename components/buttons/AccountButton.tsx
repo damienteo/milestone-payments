@@ -1,11 +1,9 @@
 import React from "react";
 import { Box, BoxProps, Link, Popover, Typography } from "@mui/material";
-import Image from "next/image";
-import OilBarrelIcon from "@mui/icons-material/OilBarrel";
-import CelebrationIcon from "@mui/icons-material/Celebration";
+
 import HouseIcon from "@mui/icons-material/House";
-import ShoppingBasketIcon from "@mui/icons-material/ShoppingBasket";
-import StadiumIcon from "@mui/icons-material/Stadium";
+import PaymentsIcon from "@mui/icons-material/Payments";
+import CodeIcon from "@mui/icons-material/Code";
 import { styled } from "@mui/material/styles";
 
 import MetaMaskButton from "./common/MetaMaskButton";
@@ -121,24 +119,13 @@ const AccountButton: React.FunctionComponent = () => {
 
           <AccountLink href="/" text="Intro" icon={<HouseIcon />} />
 
+          <AccountLink href="/code" text="Code" icon={<CodeIcon />} />
+
           <AccountLink
             href="/payments"
             text="Payments"
-            icon={<ShoppingBasketIcon />}
+            icon={<PaymentsIcon />}
           />
-
-          <StyledBox>
-            <MenuStyledButton
-              aria-describedby={id}
-              variant="outlined"
-              onClick={handleDirectFaucet}
-            >
-              <OilBarrelIcon />
-              <Typography variant="h6" sx={{ marginLeft: 1 }}>
-                Mumbai Faucet
-              </Typography>
-            </MenuStyledButton>
-          </StyledBox>
         </PopoverBox>
       </Popover>
     </>
