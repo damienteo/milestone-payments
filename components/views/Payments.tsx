@@ -1,5 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { Box, BoxProps, Button, Container, Typography } from "@mui/material";
+import {
+  Box,
+  BoxProps,
+  Button,
+  Container,
+  Link,
+  Typography,
+} from "@mui/material";
 import { styled } from "@mui/material/styles";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -16,6 +23,12 @@ import { parseTokenValue } from "../../utils/common";
 import { PAYMENT_DETAILS } from "../../constants/common";
 import { IPaymentDetails } from "../../interfaces/IPayment";
 import { clearError as clearPaymentsError } from "../../features/PaymentsSlice";
+
+const {
+  NEXT_PUBLIC_INITIALIZER_ADDRESS = "0x9536fd0322Ab322110C4D0621b46dC936Ee9fCaa",
+  NEXT_PUBLIC_FACTORY_ADDRESS = "0xd7906deE9239509EF4564839a25460Bb8F97D2e6",
+  NEXT_PUBLIC_CLONE_ADDRESS = "0x60BF7eba37b2A914EcEB8f228c302a1D02aDf6e2",
+} = process.env;
 
 const nextPaymentDetails = (): IPaymentDetails => {
   const nextPayment = JSON.parse(JSON.stringify(PAYMENT_DETAILS));
@@ -170,17 +183,27 @@ const Payments: React.FunctionComponent = () => {
             {" "}
             <pre>{JSON.stringify(paymentDetails, null, 4)}</pre>
           </Typography>
-          <Box sx={{ marginBottom: 2 }}>
+          <Box sx={{ marginBottom: 1 }}>
             <InteractButton
-              text="Set New Merkle Root"
+              text="Set New Merkle Root*"
               method={handleSetMerkleRoot}
               loading={loading}
             />
             <InteractButton
-              text="Reset Merkle Root"
+              text="Reset Merkle Root**"
               method={resetMerkleRoot}
               loading={loading}
             />
+          </Box>
+          <Box sx={{ margin: 1 }}>
+            <Typography variant="body2">
+              *Setting new Merkle Root will update the payment amounts, and set
+              a new merkle root based on the new details
+            </Typography>
+            <Typography variant="body2">
+              **Resetting the Merkle Root will revert details back to original,
+              and reset the merkle root
+            </Typography>
           </Box>
         </Box>
 
@@ -190,6 +213,29 @@ const Payments: React.FunctionComponent = () => {
         {/* Show current balance */}
         <Typography variant="h5">Test USD Balance: ${walletBalance}</Typography>
         <InteractButton text="Claim" method={handleClaim} loading={loading} />
+
+        <Box sx={{ marginTop: "2rem" }}>
+          <Link
+            href={`https://mumbai.polygonscan.com/address/${NEXT_PUBLIC_FACTORY_ADDRESS}#code`}
+            target="_blank"
+          >
+            Factory Contract: ({NEXT_PUBLIC_FACTORY_ADDRESS})
+          </Link>
+          <Link
+            href={`https://mumbai.polygonscan.com/address/${NEXT_PUBLIC_INITIALIZER_ADDRESS}#code`}
+            target="_blank"
+            sx={{ display: "block" }}
+          >
+            Initializer Contract ({NEXT_PUBLIC_INITIALIZER_ADDRESS})
+          </Link>
+          <Link
+            href={`https://mumbai.polygonscan.com/address/${NEXT_PUBLIC_CLONE_ADDRESS}#code`}
+            target="_blank"
+            sx={{ display: "block" }}
+          >
+            Clone Contract ({NEXT_PUBLIC_CLONE_ADDRESS})
+          </Link>
+        </Box>
 
         <AlertBar
           severity="warning"
