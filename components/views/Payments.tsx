@@ -4,6 +4,7 @@ import { styled } from "@mui/material/styles";
 import { useDispatch, useSelector } from "react-redux";
 
 import StyledCircularProgress from "../common/StyledCircularProgress";
+import Layout from "../layout/Layout";
 
 import { AppDispatch, RootState } from "../../store";
 import usePaymentTransactions from "../../utils/hooks/useMerkleTransactions";
@@ -16,8 +17,8 @@ import { IPaymentDetails } from "../../interfaces/IPayment";
 
 const nextPaymentDetails = (): IPaymentDetails => {
   const nextPayment = JSON.parse(JSON.stringify(PAYMENT_DETAILS));
-  for (let key of Object.keys(nextPayment.Payment)) {
-    nextPayment.Payment[key] = nextPayment.Payment[key] * 2;
+  for (let key of Object.keys(nextPayment.payments)) {
+    nextPayment.payments[key] = nextPayment.payments[key] * 2;
   }
   return nextPayment;
 };
@@ -50,10 +51,12 @@ const CumulativePayment: React.FunctionComponent = () => {
   const { checkPastClaim, setNextMerkleRoot, checkWalletBalance } =
     usePaymentTransactions();
 
-  const transactionSlice = useSelector((state: RootState) => state.transaction);
+  const transactionSlice = useSelector(
+    (state: RootState) => state.transactions
+  );
   const { loading } = transactionSlice;
 
-  const PaymentSlice = useSelector((state: RootState) => state.Payment);
+  const PaymentSlice = useSelector((state: RootState) => state.payments);
   const { pastClaimed, merkleRoot, walletBalance } = PaymentSlice;
 
   const [PaymentDetails, setPaymentDetails] =
@@ -126,7 +129,7 @@ const CumulativePayment: React.FunctionComponent = () => {
   }, [account]);
 
   return (
-    <>
+    <Layout>
       {/* Show button to connect if not connected */}
       {!account && (
         <StyledBox>
@@ -175,11 +178,13 @@ const CumulativePayment: React.FunctionComponent = () => {
           {/* Show the merkle root */}
           <Typography variant="h5">Merkle Root: {merkleRoot}</Typography>
           {/* Show current balance */}
-          <Typography variant="h5">$FRG Balance: {walletBalance}</Typography>
+          <Typography variant="h5">
+            Test USD Balance: {walletBalance}
+          </Typography>
           <InteractButton text="Claim" method={handleClaim} loading={loading} />
         </>
       )}
-    </>
+    </Layout>
   );
 };
 
