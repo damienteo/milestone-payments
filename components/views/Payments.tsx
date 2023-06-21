@@ -71,7 +71,7 @@ const Payments: React.FunctionComponent = () => {
     error: paymentsError,
   } = PaymentSlice;
 
-  const [PaymentDetails, setPaymentDetails] =
+  const [paymentDetails, setPaymentDetails] =
     useState<IPaymentDetails>(PAYMENT_DETAILS);
 
   const setupInitial = async () => {
@@ -89,7 +89,7 @@ const Payments: React.FunctionComponent = () => {
 
     dispatch(setLoading(true));
 
-    const nextTree = generateMerkleTree(PaymentDetails);
+    const nextTree = generateMerkleTree(paymentDetails);
     const hash = nextTree.getHexRoot();
 
     await setNextMerkleRoot(hash);
@@ -120,13 +120,13 @@ const Payments: React.FunctionComponent = () => {
     dispatch(setLoading(true));
 
     const amount = parseTokenValue(
-      PaymentDetails.payments[account].toString(),
-      18
+      paymentDetails.payments[account].toString(),
+      6
     );
     const proof = getMerkleProof(
       account,
-      PaymentDetails.payments[account],
-      PaymentDetails
+      paymentDetails.payments[account],
+      paymentDetails
     );
 
     await submitClaim(BigInt(Number(amount)), proof);
@@ -181,7 +181,7 @@ const Payments: React.FunctionComponent = () => {
                 sx={{ display: "inline-block", textAlign: "left" }}
               >
                 {" "}
-                <pre>{JSON.stringify(PaymentDetails, null, 4)}</pre>
+                <pre>{JSON.stringify(paymentDetails, null, 4)}</pre>
               </Typography>
               <Box sx={{ marginBottom: 2 }}>
                 <InteractButton

@@ -19,7 +19,7 @@ const NEXT_PUBLIC_TEST_USD_ADDRESS = process.env.NEXT_PUBLIC_TEST_USD_ADDRESS;
 
 const formatValue = (result: any) => {
   const nextResult = BigInt(result).toString();
-  const nextValue = formatTokenValue(nextResult, 18);
+  const nextValue = formatTokenValue(nextResult, 6);
 
   return nextValue;
 };
