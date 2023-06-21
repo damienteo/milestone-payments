@@ -5,6 +5,8 @@ const theme = createTheme({
     button: {
       textTransform: "none",
     },
+    h2: { marginTop: "2rem", marginBottom: "1.5rem" },
+    h5: { marginBottom: "1rem" },
   },
 });
 
