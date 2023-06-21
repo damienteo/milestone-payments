@@ -95,6 +95,7 @@ const AccountButton: React.FunctionComponent = () => {
         keepMounted
         PaperProps={{
           elevation: 0,
+          variant: "outlined",
           sx: {
             width: 300,
           },
@@ -117,6 +118,14 @@ const AccountButton: React.FunctionComponent = () => {
               </Link>
             </Typography>
           </StyledBox>
+
+          <AccountLink href="/" text="Intro" icon={<HouseIcon />} />
+
+          <AccountLink
+            href="/payments"
+            text="Payments"
+            icon={<ShoppingBasketIcon />}
+          />
 
           <StyledBox>
             <MenuStyledButton
