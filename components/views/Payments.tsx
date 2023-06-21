@@ -44,12 +44,16 @@ const InteractButton = (props: {
   );
 };
 
-const CumulativePayment: React.FunctionComponent = () => {
+const Payments: React.FunctionComponent = () => {
   const dispatch = useDispatch<AppDispatch>();
 
   const { account, requestConnect } = useConnectWallet();
-  const { checkPastClaim, setNextMerkleRoot, checkWalletBalance } =
-    usePaymentTransactions();
+  const {
+    getMerkleRoot,
+    checkPastClaim,
+    setNextMerkleRoot,
+    checkWalletBalance,
+  } = usePaymentTransactions();
 
   const transactionSlice = useSelector(
     (state: RootState) => state.transactions
@@ -65,6 +69,7 @@ const CumulativePayment: React.FunctionComponent = () => {
   const setupInitial = async () => {
     dispatch(setLoading(true));
 
+    await getMerkleRoot();
     await checkPastClaim();
     await checkWalletBalance();
 
@@ -188,4 +193,4 @@ const CumulativePayment: React.FunctionComponent = () => {
   );
 };
 
-export default CumulativePayment;
+export default Payments;

@@ -71,6 +71,31 @@ const useMilestonePaymentTransactions = () => {
     return { signer };
   };
 
+  const getMerkleRoot = async (): Promise<boolean> => {
+    const { signer } = (await runPreChecks()) || {};
+
+    if (!signer) return false;
+
+    const airdropContract = new ethers.Contract(
+      address || "",
+      MilestonePaymentsInitializableJson.abi,
+      signer
+    );
+
+    let result;
+
+    try {
+      result = await airdropContract.merkleRoot();
+
+      dispatch(setMerkleRoot(result));
+    } catch (error: any) {
+      sendTransactionErrorOnMetaMaskRequest(error);
+      return false;
+    }
+
+    return result;
+  };
+
   const checkPastClaim = async (): Promise<number> => {
     const { signer } = (await runPreChecks()) || {};
 
@@ -148,10 +173,36 @@ const useMilestonePaymentTransactions = () => {
     return result;
   };
 
+  const submitClaim = async (amount: BigInt, proof: string[]) => {
+    const { signer } = (await runPreChecks()) || {};
+
+    if (!signer) return;
+
+    const airdropContract = new ethers.Contract(
+      address || "",
+      MilestonePaymentsInitializableJson.abi,
+      signer
+    );
+
+    try {
+      const transaction = await airdropContract.claim(
+        signer.address,
+        amount,
+        proof
+      );
+      await transaction.wait(10);
+    } catch (error: any) {
+      sendTransactionErrorOnMetaMaskRequest(error);
+      return;
+    }
+  };
+
   return {
+    getMerkleRoot,
     checkPastClaim,
     setNextMerkleRoot,
     checkWalletBalance,
+    submitClaim,
   };
 };
 
