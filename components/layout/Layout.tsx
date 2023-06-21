@@ -19,7 +19,7 @@ const Layout: React.FunctionComponent<LayoutProps> = (props) => {
         <meta property="og:title" content="Payments Agreement" key="title" />
       </Head>
       <NavBar />
-      <Container maxWidth="lg" sx={{ paddingTop: 8 }}>
+      <Container maxWidth="lg" sx={{ paddingTop: 8, paddingBottom: 8 }}>
         {children}
       </Container>
     </>
