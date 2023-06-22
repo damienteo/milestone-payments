@@ -6,6 +6,7 @@ import useDispatchErrors from "./useDispatchErrors";
 
 import {
   setPastClaimed,
+  setClaimable,
   setMerkleRoot,
   setPeriod,
   setMilestone,
@@ -225,6 +226,32 @@ const useMilestonePaymentTransactions = () => {
     return result;
   };
 
+  const getClaimable = async (amount: BigInt, proof: string[]) => {
+    const { signer } = (await runPreChecks()) || {};
+
+    if (!signer) return;
+
+    const paymentsContract = new ethers.Contract(
+      address || "",
+      MilestonePaymentsInitializableJson.abi,
+      signer
+    );
+
+    let result;
+
+    try {
+      result = await paymentsContract.getNextClaim(
+        signer.address,
+        amount,
+        proof
+      );
+      dispatch(setClaimable(Number(result)));
+    } catch (error: any) {
+      sendTransactionErrorOnMetaMaskRequest(error);
+      return;
+    }
+  };
+
   const submitClaim = async (amount: BigInt, proof: string[]) => {
     const { signer } = (await runPreChecks()) || {};
 
@@ -251,6 +278,7 @@ const useMilestonePaymentTransactions = () => {
 
   return {
     getMerkleRoot,
+    getClaimable,
     checkPastClaim,
     setNextMerkleRoot,
     checkWalletBalance,

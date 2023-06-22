@@ -67,6 +67,7 @@ const Payments: React.FunctionComponent = () => {
     getMerkleRoot,
     getPeriod,
     getMilestone,
+    getClaimable,
     checkPastClaim,
     setNextMerkleRoot,
     checkWalletBalance,
@@ -81,6 +82,7 @@ const Payments: React.FunctionComponent = () => {
   const PaymentSlice = useSelector((state: RootState) => state.payments);
   const {
     pastClaimed,
+    claimable,
     period,
     milestone,
     merkleRoot,
@@ -97,6 +99,23 @@ const Payments: React.FunctionComponent = () => {
     await getMerkleRoot();
     await getPeriod();
     await getMilestone();
+
+    // Allowing this to proceed will cause error notification FullyClaimed,
+    // Which is expected behaviour, but can be confusing to users
+    // Better to fix at Smart Contract level
+    if (account && paymentDetails.payments[account]) {
+      const amount = parseTokenValue(
+        paymentDetails.payments[account].toString(),
+        6
+      );
+      const proof = getMerkleProof(
+        account,
+        paymentDetails.payments[account],
+        paymentDetails
+      );
+      await getClaimable(amount, proof);
+    }
+
     await checkPastClaim();
     await checkWalletBalance();
 
@@ -149,8 +168,7 @@ const Payments: React.FunctionComponent = () => {
     );
 
     await submitClaim(BigInt(Number(amount)), proof);
-    await checkPastClaim();
-    await checkWalletBalance();
+    await setupInitial();
 
     dispatch(setLoading(false));
   };
@@ -240,6 +258,7 @@ const Payments: React.FunctionComponent = () => {
         <Typography variant="h5">Merkle Root: {merkleRoot}</Typography>
         <Typography variant="h5">Period: {period}</Typography>
         <Typography variant="h5">Milestone: {milestone}</Typography>
+        <Typography variant="h5">Next Claim: ${claimable}</Typography>
         <Typography variant="h5">Cumulative Claimed: ${pastClaimed}</Typography>
         {/* Show current balance */}
         <Typography variant="h5">Test USD Balance: ${walletBalance}</Typography>

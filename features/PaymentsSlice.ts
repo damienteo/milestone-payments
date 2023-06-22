@@ -3,6 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 type SliceState = {
   hasClaimed: boolean;
   pastClaimed: number;
+  claimable: number;
   merkleRoot: string | null;
   walletBalance: number | null;
   period: number | null;
@@ -16,6 +17,7 @@ type SliceState = {
 const initialState: SliceState = {
   hasClaimed: false,
   pastClaimed: 0,
+  claimable: 0,
   merkleRoot: null,
   walletBalance: null,
   period: null,
@@ -38,6 +40,9 @@ export const PaymentsSlice = createSlice({
     setPastClaimed: (state, action) => {
       state.pastClaimed = action.payload;
     },
+    setClaimable: (state, action) => {
+      state.claimable = action.payload;
+    },
     setMerkleRoot: (state, action) => {
       state.merkleRoot = action.payload;
     },
@@ -58,6 +63,7 @@ export const {
   clearError,
   setHasClaimed,
   setPastClaimed,
+  setClaimable,
   setMerkleRoot,
   setPeriod,
   setMilestone,
