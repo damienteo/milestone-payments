@@ -14,6 +14,7 @@ export default responsiveFontSizes(theme);
 
 declare module "@mui/material/styles" {
   interface Theme {
+    typography: { fontFamily: "Poppins, Roboto, monospace" };
     palette: {
       primary: {
         main: string;
