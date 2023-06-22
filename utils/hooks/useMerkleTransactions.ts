@@ -245,7 +245,7 @@ const useMilestonePaymentTransactions = () => {
         amount,
         proof
       );
-      dispatch(setClaimable(Number(result)));
+      dispatch(setClaimable(Number(formatValue(result))));
     } catch (error: any) {
       sendTransactionErrorOnMetaMaskRequest(error);
       return;
