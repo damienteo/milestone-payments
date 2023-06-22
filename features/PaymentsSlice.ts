@@ -5,6 +5,8 @@ type SliceState = {
   pastClaimed: number;
   merkleRoot: string | null;
   walletBalance: number | null;
+  period: number | null;
+  milestone: number | null;
   error?: null | string;
   loading: boolean;
   data: { outcome: boolean } | null;
@@ -16,6 +18,8 @@ const initialState: SliceState = {
   pastClaimed: 0,
   merkleRoot: null,
   walletBalance: null,
+  period: null,
+  milestone: null,
   error: null,
   loading: false,
   data: null,
@@ -37,6 +41,12 @@ export const PaymentsSlice = createSlice({
     setMerkleRoot: (state, action) => {
       state.merkleRoot = action.payload;
     },
+    setPeriod: (state, action) => {
+      state.period = action.payload;
+    },
+    setMilestone: (state, action) => {
+      state.milestone = action.payload;
+    },
     setWalletBalance: (state, action) => {
       state.walletBalance = action.payload;
     },
@@ -49,6 +59,8 @@ export const {
   setHasClaimed,
   setPastClaimed,
   setMerkleRoot,
+  setPeriod,
+  setMilestone,
   setWalletBalance,
 } = PaymentsSlice.actions;
 

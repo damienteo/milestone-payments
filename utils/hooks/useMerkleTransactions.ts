@@ -7,6 +7,8 @@ import useDispatchErrors from "./useDispatchErrors";
 import {
   setPastClaimed,
   setMerkleRoot,
+  setPeriod,
+  setMilestone,
   setWalletBalance,
 } from "../../features/PaymentsSlice";
 import { formatTokenValue } from "../common";
@@ -71,12 +73,12 @@ const useMilestonePaymentTransactions = () => {
     return { signer };
   };
 
-  const getMerkleRoot = async (): Promise<boolean> => {
+  const getPeriod = async (): Promise<boolean> => {
     const { signer } = (await runPreChecks()) || {};
 
     if (!signer) return false;
 
-    const airdropContract = new ethers.Contract(
+    const paymentsContract = new ethers.Contract(
       address || "",
       MilestonePaymentsInitializableJson.abi,
       signer
@@ -85,7 +87,57 @@ const useMilestonePaymentTransactions = () => {
     let result;
 
     try {
-      result = await airdropContract.merkleRoot();
+      result = await paymentsContract.period();
+
+      dispatch(setPeriod(Number(result)));
+    } catch (error: any) {
+      sendTransactionErrorOnMetaMaskRequest(error);
+      return false;
+    }
+
+    return result;
+  };
+
+  const getMilestone = async (): Promise<boolean> => {
+    const { signer } = (await runPreChecks()) || {};
+
+    if (!signer) return false;
+
+    const paymentsContract = new ethers.Contract(
+      address || "",
+      MilestonePaymentsInitializableJson.abi,
+      signer
+    );
+
+    let result;
+
+    try {
+      result = await paymentsContract.milestone();
+
+      dispatch(setMilestone(Number(result)));
+    } catch (error: any) {
+      sendTransactionErrorOnMetaMaskRequest(error);
+      return false;
+    }
+
+    return result;
+  };
+
+  const getMerkleRoot = async (): Promise<boolean> => {
+    const { signer } = (await runPreChecks()) || {};
+
+    if (!signer) return false;
+
+    const paymentsContract = new ethers.Contract(
+      address || "",
+      MilestonePaymentsInitializableJson.abi,
+      signer
+    );
+
+    let result;
+
+    try {
+      result = await paymentsContract.merkleRoot();
 
       dispatch(setMerkleRoot(result));
     } catch (error: any) {
@@ -178,14 +230,14 @@ const useMilestonePaymentTransactions = () => {
 
     if (!signer) return;
 
-    const airdropContract = new ethers.Contract(
+    const paymentsContract = new ethers.Contract(
       address || "",
       MilestonePaymentsInitializableJson.abi,
       signer
     );
 
     try {
-      const transaction = await airdropContract.claim(
+      const transaction = await paymentsContract.claim(
         signer.address,
         amount,
         proof
@@ -202,6 +254,8 @@ const useMilestonePaymentTransactions = () => {
     checkPastClaim,
     setNextMerkleRoot,
     checkWalletBalance,
+    getPeriod,
+    getMilestone,
     submitClaim,
   };
 };

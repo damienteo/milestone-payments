@@ -8,7 +8,6 @@ import {
   Typography,
 } from "@mui/material";
 import { styled } from "@mui/material/styles";
-import Image from "next/image";
 import { useDispatch, useSelector } from "react-redux";
 
 import StyledCircularProgress from "../common/StyledCircularProgress";
@@ -63,9 +62,11 @@ const InteractButton = (props: {
 const Payments: React.FunctionComponent = () => {
   const dispatch = useDispatch<AppDispatch>();
 
-  const { account, requestConnect } = useConnectWallet();
+  const { account } = useConnectWallet();
   const {
     getMerkleRoot,
+    getPeriod,
+    getMilestone,
     checkPastClaim,
     setNextMerkleRoot,
     checkWalletBalance,
@@ -80,6 +81,8 @@ const Payments: React.FunctionComponent = () => {
   const PaymentSlice = useSelector((state: RootState) => state.payments);
   const {
     pastClaimed,
+    period,
+    milestone,
     merkleRoot,
     walletBalance,
     error: paymentsError,
@@ -92,6 +95,8 @@ const Payments: React.FunctionComponent = () => {
     dispatch(setLoading(true));
 
     await getMerkleRoot();
+    await getPeriod();
+    await getMilestone();
     await checkPastClaim();
     await checkWalletBalance();
 
@@ -233,6 +238,8 @@ const Payments: React.FunctionComponent = () => {
         </Box>
         {/* Show the merkle root */}
         <Typography variant="h5">Merkle Root: {merkleRoot}</Typography>
+        <Typography variant="h5">Period: {period}</Typography>
+        <Typography variant="h5">Milestone: {milestone}</Typography>
         <Typography variant="h5">Cumulative Claimed: ${pastClaimed}</Typography>
         {/* Show current balance */}
         <Typography variant="h5">Test USD Balance: ${walletBalance}</Typography>
