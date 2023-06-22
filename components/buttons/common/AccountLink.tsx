@@ -6,7 +6,7 @@ import NextLink from "next/link";
 import MenuStyledButton from "./MenuStyledButton";
 
 const StyledBox = styled(Box)<BoxProps>(({ theme }) => ({
-  marginBottom: theme.spacing(2),
+  marginRight: theme.spacing(2),
 }));
 
 interface IAccountLink {
@@ -23,7 +23,7 @@ const AccountLink: React.FunctionComponent<IAccountLink> = ({
   return (
     <StyledBox>
       <NextLink href={href} passHref>
-        <MenuStyledButton variant="outlined">
+        <MenuStyledButton variant="contained">
           <>
             {icon}
             <Typography variant="h6" sx={{ marginLeft: 1 }}>
