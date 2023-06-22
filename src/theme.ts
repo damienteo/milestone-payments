@@ -2,6 +2,7 @@ import { createTheme, responsiveFontSizes } from "@mui/material/styles";
 
 const theme = createTheme({
   typography: {
+    fontFamily: "Poppins, Roboto, monospace",
     button: {
       textTransform: "none",
     },
@@ -14,7 +15,6 @@ export default responsiveFontSizes(theme);
 
 declare module "@mui/material/styles" {
   interface Theme {
-    typography: { fontFamily: "Poppins, Roboto, monospace" };
     palette: {
       primary: {
         main: string;
