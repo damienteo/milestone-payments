@@ -61,7 +61,7 @@ const AccountButton: React.FunctionComponent = () => {
       color="secondary"
     >
       <Typography variant="h6" sx={{ marginLeft: 1 }}>
-        Account:{truncateString(account, 8)}
+        {truncateString(account, 8)}
       </Typography>
     </MenuStyledButton>
   );
