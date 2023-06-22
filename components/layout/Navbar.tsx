@@ -24,7 +24,7 @@ const NavBar: React.FunctionComponent = () => {
       <AppBar position="fixed" color="secondary" elevation={5}>
         <Toolbar>
           <StyledBox>
-            <Typography>Payments Agreement</Typography>
+            <Typography variant="h4">Payments Agreement</Typography>
           </StyledBox>{" "}
           <AccountLink href="/" text="Intro" icon={<HouseIcon />} />
           <AccountLink href="/code" text="Code" icon={<CodeIcon />} />
