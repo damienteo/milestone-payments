@@ -8,6 +8,7 @@ import {
   Typography,
 } from "@mui/material";
 import { styled } from "@mui/material/styles";
+import Image from "next/image";
 import { useDispatch, useSelector } from "react-redux";
 
 import StyledCircularProgress from "../common/StyledCircularProgress";
@@ -165,7 +166,8 @@ const Payments: React.FunctionComponent = () => {
 
   return (
     <Layout>
-      <Container maxWidth="md" sx={{ marginTop: 8 }}>
+      <Container maxWidth="md">
+        <Typography variant="h2">Payments</Typography>
         {/* Show JSON file for the Payment details */}
         <Box
           sx={{
@@ -206,15 +208,8 @@ const Payments: React.FunctionComponent = () => {
             </Typography>
           </Box>
         </Box>
-
-        {/* Show the merkle root */}
-        <Typography variant="h5">Merkle Root: {merkleRoot}</Typography>
-        <Typography variant="h5">Cumulative Claimed: ${pastClaimed}</Typography>
-        {/* Show current balance */}
-        <Typography variant="h5">Test USD Balance: ${walletBalance}</Typography>
-        <InteractButton text="Claim" method={handleClaim} loading={loading} />
-
-        <Box sx={{ marginTop: "2rem" }}>
+        <Typography variant="h3">On-Chain Details</Typography>
+        <Box sx={{ margin: "1rem 0" }}>
           <Link
             href={`https://mumbai.polygonscan.com/address/${NEXT_PUBLIC_FACTORY_ADDRESS}#code`}
             target="_blank"
@@ -236,6 +231,12 @@ const Payments: React.FunctionComponent = () => {
             Clone Contract ({NEXT_PUBLIC_CLONE_ADDRESS})
           </Link>
         </Box>
+        {/* Show the merkle root */}
+        <Typography variant="h5">Merkle Root: {merkleRoot}</Typography>
+        <Typography variant="h5">Cumulative Claimed: ${pastClaimed}</Typography>
+        {/* Show current balance */}
+        <Typography variant="h5">Test USD Balance: ${walletBalance}</Typography>
+        <InteractButton text="Claim" method={handleClaim} loading={loading} />
 
         <AlertBar
           severity="warning"

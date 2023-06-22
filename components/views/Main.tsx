@@ -1,5 +1,6 @@
 import React from "react";
-import { Box, Typography } from "@mui/material";
+import { Box, Link, Typography } from "@mui/material";
+import Image from "next/image";
 
 import Layout from "../layout/Layout";
 
@@ -63,6 +64,83 @@ const MainPage: React.FunctionComponent = () => {
         payment in the event of issues
       </Typography>
 
+      <Link
+        href={`https://en.wikipedia.org/wiki/Merkle_tree`}
+        target="_blank"
+        sx={{ display: "block" }}
+      >
+        Wikipedia Article: Merkle Tree
+      </Link>
+      <Box sx={{ width: "100%", height: "500px", position: "relative" }}>
+        <Image
+          src="/images/merkle-hash-tree.png"
+          alt="Merkle Hash Tree"
+          layout="fill"
+          objectFit="contain"
+        />
+      </Box>
+      <Box sx={{ display: "flex", justifyContent: "center" }}>
+        <Box
+          sx={{
+            display: "inline-block",
+            paddingX: 3,
+            border: "1px solid #D3D3D3",
+            borderRadius: 5,
+            marginBottom: 3,
+          }}
+        >
+          <Typography
+            variant="h6"
+            sx={{ display: "inline-block", textAlign: "left" }}
+          >
+            {" "}
+            <pre>{`payments: {
+    "0xABC": amounts[1],
+    "0xDEF": amounts[2],
+    "0xGHI": amounts[3],
+    "0xJKL": amounts[4],
+  }`}</pre>
+          </Typography>
+        </Box>
+      </Box>
+
+      <Typography variant="h5">
+        We start by hashing each item (e.g. {`"0xABC"`}: amounts[1]) to get a
+        hash.
+      </Typography>
+      <Typography variant="h5">
+        The four amounts will result in L1, L2, L3, L4 accordingly.
+      </Typography>
+      <Typography variant="h5">
+        Each leaf is hashed to form the top hash, something which outsiders
+        would not have the contents of.
+      </Typography>
+      <Typography variant="h5">
+        Insiders can still verify details based on merkle proofs.
+      </Typography>
+
+      <Box sx={{ width: "100%", height: "300px", position: "relative" }}>
+        <Image
+          src="/images/merkle-proof.png"
+          alt="Merkle Proof"
+          layout="fill"
+          objectFit="contain"
+        />
+      </Box>
+
+      <Typography variant="h5">
+        Writing data to the blockchain network can also be expensive. Merkle
+        hashes mean that we are writing only a single string, saving on
+        operational costs.
+      </Typography>
+      <Typography variant="h5">
+        For the Smart Contracts, we will be using a factory contract to make
+        clones of Payment Agreement Contracts. These clones only store the data
+        for each individual agreement, and will point to a single contract which
+        will hold the logic for execution. This help us to further save on
+        deployment costs.
+      </Typography>
+
       <Typography variant="h2">Benefits</Typography>
       <Typography variant="h5">
         <u>Transparency</u>: Proof of Funds on the part of the client. In a Web2
@@ -115,7 +193,7 @@ const MainPage: React.FunctionComponent = () => {
         providing incentive to see through the process till the end. This can be
         programmed straight into the Smart Contract itself.
       </Typography>
-      <Typography variant="h5">- Manpower savings</Typography>
+      <Typography variant="h5">- Cost savings due to automation</Typography>
     </Layout>
   );
 };
